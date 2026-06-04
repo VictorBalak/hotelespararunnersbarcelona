@@ -1,0 +1,69 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Barcelona Running Hotels</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="{% static 'mapapp/css/map.css' %}?v=panel-scroll-1">
+  <script defer src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script type="module" src="{% static 'mapapp/js/map.js' %}?v=modules-1"></script>
+</head>
+<body
+  data-hotels-url="{% url 'hotels_geojson' %}"
+  data-routes-url="{% url 'routes_geojson' %}"
+>
+  <main class="map-shell" aria-label="Barcelona running hotel map">
+    <div id="map" class="map-canvas"></div>
+
+    <!-- Panel lateral: se rellena desde los modulos JavaScript del mapa. -->
+    <aside id="hotel-panel" class="hotel-panel" aria-hidden="true" aria-labelledby="hotel-name">
+      <button id="panel-close" class="panel-close" type="button" aria-label="Close hotel details" title="Close">X</button>
+
+      <p class="panel-kicker">Hotel details</p>
+      <h1 id="hotel-name" class="hotel-name">
+        <a id="hotel-title-link" class="hotel-name-link" target="_blank" rel="noreferrer"></a>
+      </h1>
+
+      <dl class="hotel-metrics">
+        <div>
+          <dt>Running accessibility score</dt>
+          <dd id="hotel-score"></dd>
+        </div>
+        <div>
+          <dt>Review score</dt>
+          <dd id="hotel-rating"></dd>
+        </div>
+        <div>
+          <dt>Distance to closest running route</dt>
+          <dd id="hotel-distance"></dd>
+        </div>
+        <div>
+          <dt>Routes within 1000 m</dt>
+          <dd id="hotel-routes"></dd>
+        </div>
+        <div>
+          <dt>Coordinates</dt>
+          <dd><a id="hotel-location" class="location-link" target="_blank" rel="noreferrer"></a></dd>
+        </div>
+      </dl>
+
+      <section id="hotel-summary-block" class="hotel-summary-block" hidden>
+        <h2 class="hotel-summary-title">Guest review summary</h2>
+        <p id="hotel-summary" class="hotel-summary"></p>
+      </section>
+
+      <a id="hotel-booking" class="booking-link" href="#" target="_blank" rel="noreferrer">Booking</a>
+    </aside>
+
+    <!-- La leyenda se genera desde la misma configuracion que colorea los hoteles. -->
+    <div class="score-legend" aria-label="Running accessibility score colors">
+      <p class="score-legend-title">Running score</p>
+      <div id="score-legend-items" class="score-legend-items"></div>
+    </div>
+
+    <div id="route-tooltip" class="route-tooltip" role="status"></div>
+  </main>
+</body>
+</html>

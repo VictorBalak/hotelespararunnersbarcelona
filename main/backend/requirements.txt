@@ -1,0 +1,7 @@
+# Aplicacion web.
+Django>=5.2,<5.3
+
+# Scripts de preparacion de datos.
+pandas>=2.2
+geopandas>=1.0
+openpyxl>=3.1
